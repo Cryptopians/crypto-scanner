@@ -1,7 +1,7 @@
 const TICKER = 'btcusdt';
 const PRICE_THRESHOLD = 1500; // usdt
-const QUANTITY_THRESHOLD = 0.01; // btc
-const WALL_THRESHOLD = 50 // percentage
+const QUANTITY_THRESHOLD = 0.1; // btc
+const WALL_THRESHOLD = 10; // btc
 
 const UI = {
   ticker: document.getElementById('ticker'),
@@ -44,7 +44,7 @@ function renderDepth(entries, color, element) {
       const perc = Math.round((total / max) * 100);
       const size = 100 - perc;
 
-      if (perc >= WALL_THRESHOLD) {
+      if (quantity >= WALL_THRESHOLD) {
         html = `<p style="font-weight:bolder;margin:0;padding:0;background:linear-gradient(90deg, #fff ${size}%, #f5f5f5 ${size}%);"><span style="color:${color};">$${price}</span><span style="float:right;">${quantity}</span></p>` + html;
       }
 
