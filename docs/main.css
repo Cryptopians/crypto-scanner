@@ -1,0 +1,29 @@
+.order {
+  margin-bottom: 0;
+  font-weight: lighter;
+}
+
+.current-price {
+  font-weight: bold;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.price {
+  
+}
+
+.quantity {
+  float: right;
+  clear: both;
+}
+
+.sell {
+  color: red;
+}
+
+.buy {
+  color: green;  
+}
