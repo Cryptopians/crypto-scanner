@@ -22,14 +22,20 @@ wsStream.onmessage = (event) => {
   }
 };
 
-const wsDepth = new WebSocket(`wss://stream.binance.com:9443/ws/${TICKER}@depth20@100ms`);
+const wsDepth = new WebSocket(`wss://stream.binance.com:9443/ws/${TICKER}@depth`);
 
 function renderDepth(entries, color, element) {
+  const max = Math.max.apply(Math, entries.map((obj) => parseFloat(obj[0]) * parseFloat(obj[1])));
+
   let html = '';
 
   if (entries && entries.length) {
     for (const [price, quantity] of entries) {
-      html += `<span style="color:${color};">$${parseFloat(price)}</span><span>${quantity}</span><br />`;
+      const total = parseFloat(price) * parseFloat(quantity);
+      const perc = Math.round((total / max) * 100);
+      const size = 100 - perc;
+
+      html += `<p style="margin:0;padding:0;background:linear-gradient(90deg, #fff ${size}%, #f5f5f5 ${size}%);"><span style="color:${color};">$${parseFloat(price)}</span><span style="float:right;">${quantity}</span></p>`;
     }
   }
 
@@ -42,8 +48,8 @@ wsDepth.onerror = (event) => {
 
 wsDepth.onmessage = (event) => {
   const data = JSON.parse(event.data);
-  const bids = data.bids;
-  const asks = data.asks;
+  const bids = data.b;
+  const asks = data.a.reverse();
 
   renderDepth(bids, 'green', UI.bids);
   renderDepth(asks, 'red', UI.asks);
