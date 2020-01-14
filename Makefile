@@ -1,2 +1,2 @@
 serve:
-	python3 -m http.server --directory docs/
+	python3 -m http.server --directory public/
