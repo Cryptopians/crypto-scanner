@@ -133,20 +133,32 @@ function renderWalls(orderBook, element, className, label, reversed) {
     sortedOrders = sortedOrders.reverse();
   }
 
-  const closestEligibleOrder = sortedOrders.find((obj) => {
+  let walls = sortedOrders.filter((obj) => {
     return obj.quantity >= WALL_THRESHOLD;
   });
 
-  if (closestEligibleOrder) {
+  if (walls.length > 5) {
+    walls = walls.slice(0, 5);
+  }
+
+  let html = ``;
+
+  walls.forEach((obj) => {
+    html += `
+      <p>
+        <span class="price">$${obj.price}</span>
+        <span class="quantity">${obj.quantity} ${ASSET_B.toUpperCase()}</span>
+      </p>
+    `;
+  });
+
+  if (html.length) {
     element.innerHTML = `
       <div class="alert ${className}">
         <h5 class="alert-heading">
-          Closest ${label} wall
+          Closest ${label} wall(s)
         </h5>
-        <p>
-          <span class="price">$${closestEligibleOrder.price}</span>
-          <span class="quantity">${closestEligibleOrder.quantity} ${ASSET_A.toUpperCase()}</span>
-        </p>
+        ${html}
       </div>
     `;
   }
