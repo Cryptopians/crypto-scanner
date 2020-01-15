@@ -1,10 +1,6 @@
 const ASSET_A = 'btc';
 const ASSET_B = 'usdt';
 const TICKER = `${ASSET_A}${ASSET_B}`;
-const PRICE_THRESHOLD = 1500; // usdt
-const QUANTITY_THRESHOLD = 0.1; // btc
-const WALL_THRESHOLD = 25; // btc
-const MAX_ORDERS_TO_RENDER = 50;
 
 const DEPTH_SNAPSHOT_URL = `https://www.binance.com/api/v1/depth?symbol=${TICKER.toUpperCase()}&limit=1000`;
 
@@ -16,6 +12,9 @@ const UI = {
   sellWalls: document.getElementById('sell-walls'),
   buyWalls: document.getElementById('buy-walls'),
 };
+
+let WALL_THRESHOLD = 25; // btc
+let MAX_ORDERS_TO_RENDER = 50;
 
 let wsStream;
 let wsDepth;
@@ -30,6 +29,8 @@ function Order(price, quantity) {
 }
 
 function init() {
+  initForm();
+
   fetch(DEPTH_SNAPSHOT_URL, {
     mode: 'no-cors'
   }).then((res) => {
@@ -38,6 +39,10 @@ function init() {
 
   initStream();
   initDepth();
+}
+
+function initForm() {
+  
 }
 
 function initStream() {
@@ -75,7 +80,7 @@ function initStream() {
 }
 
 function initDepth() {
-  wsDepth = new WebSocket(`wss://stream.binance.com:9443/ws/${TICKER}@depth@100ms`);
+  wsDepth = new WebSocket(`wss://stream.binance.com:9443/ws/${TICKER}@depth`);
 
   wsDepth.onerror = (event) => {
     console.log(event);

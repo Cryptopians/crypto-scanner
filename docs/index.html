@@ -16,6 +16,12 @@
       <p class="lead">
         Current price <span id="ticker"></span>
       </p>
+      <form class="form-inline">
+        <label for="i-depth">Depth</label>
+        <input class="form-control" type="number" min="0" step="1" value="50" id="i-depth" readonly disabled>
+        <label for="i-wall-quantity-treshold">Wall quantity threshold</label>
+        <input class="form-control" type="number" min="0" step="1" value="25" id="i-wall-quantity-treshold" readonly disabled>
+      </form>
       <hr />
       <div class="row">
         <div class="col-xs-6">
