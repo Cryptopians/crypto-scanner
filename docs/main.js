@@ -147,7 +147,7 @@ function renderWalls(orderBook, element, className, label, reversed) {
     html += `
       <p>
         <span class="price">$${obj.price}</span>
-        <span class="quantity">${obj.quantity} ${ASSET_B.toUpperCase()}</span>
+        <span class="quantity">${obj.quantity} ${ASSET_A.toUpperCase()}</span>
       </p>
     `;
   });
